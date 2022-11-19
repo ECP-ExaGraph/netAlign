@@ -1,0 +1,72 @@
+Threads 1
+Running numactl --interleave=all ./netAlign -n 50 -r 0 -f -v ../data-mtx/../data-mtx/lcsh-small
+finalize: 0
+alpha: 1
+beta: 2
+gamma: 0.99
+maxiter: 50
+algorithm: mp
+damping: 2
+batch: 0
+problem: ../data-mtx/../data-mtx/lcsh-small
+Finished reading data. 0.022248 sec.
+Threads 2
+Running numactl --interleave=all ./netAlign -n 50 -r 0 -f -v ../data-mtx/../data-mtx/lcsh-small
+finalize: 0
+alpha: 1
+beta: 2
+gamma: 0.99
+maxiter: 50
+algorithm: mp
+damping: 2
+batch: 0
+problem: ../data-mtx/../data-mtx/lcsh-small
+Finished reading data. 0.022454 sec.
+Threads 4
+Running numactl --interleave=all ./netAlign -n 50 -r 0 -f -v ../data-mtx/../data-mtx/lcsh-small
+finalize: 0
+alpha: 1
+beta: 2
+gamma: 0.99
+maxiter: 50
+algorithm: mp
+damping: 2
+batch: 0
+problem: ../data-mtx/../data-mtx/lcsh-small
+Finished reading data. 0.0224481 sec.
+Threads 8
+Running numactl --interleave=all ./netAlign -n 50 -r 0 -f -v ../data-mtx/../data-mtx/lcsh-small
+finalize: 0
+alpha: 1
+beta: 2
+gamma: 0.99
+maxiter: 50
+algorithm: mp
+damping: 2
+batch: 0
+problem: ../data-mtx/../data-mtx/lcsh-small
+Finished reading data. 0.022505 sec.
+Threads 16
+Running numactl --interleave=all ./netAlign -n 50 -r 0 -f -v ../data-mtx/../data-mtx/lcsh-small
+finalize: 0
+alpha: 1
+beta: 2
+gamma: 0.99
+maxiter: 50
+algorithm: mp
+damping: 2
+batch: 0
+problem: ../data-mtx/../data-mtx/lcsh-small
+Finished reading data. 0.022217 sec.
+Threads 32
+Running numactl --interleave=all ./netAlign -n 50 -r 0 -f -v ../data-mtx/../data-mtx/lcsh-small
+finalize: 0
+alpha: 1
+beta: 2
+gamma: 0.99
+maxiter: 50
+algorithm: mp
+damping: 2
+batch: 0
+problem: ../data-mtx/../data-mtx/lcsh-small
+Finished reading data. 0.0223181 sec.

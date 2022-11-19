@@ -1,0 +1,214 @@
+# git version [master e9e3181] 
+
+OMP_NUM_THREADS=8 KMP_AFFINITY=granularity=fine,compact,1,0 ./netAlign ../data-mtx/lcsh-big 1 2 0.999 5 0 2
+
+# 8 threads, last iteration
+Step I: 0.0239239 sec.
+Line 3: 0.00309706 sec.
+Line 4: 0.0153999 sec.
+Line 5: 0.035017 sec.
+Line 6: 0.0326731 sec.
+Line 7: 0.0195918 sec.
+Line 8: 0.030812 sec.
+Step R: 3.71933e-05 sec.
+Step S: 6.91414e-06 sec.
+
+OMP_NUM_THREADS=1 KMP_AFFINITY=granularity=fine,compact,1,0 ./netAlign ../data-mtx/lcsh-big 1 2 0.999 5 0 2
+
+# 1 thread, last iteration
+Step I: 0.0325911 sec. # bad (1.5x)
+Line 3: 0.0118639 sec. # so-so (4x)
+Line 4: 0.030226 sec. # bad (2x)
+Line 5: 0.1444 sec. # so-so (4x)
+Line 6: 0.0871079 sec.  # bad (3x)
+Line 7: 0.0510521 sec. # so-so (4x)
+Line 8: 0.0509019 sec. # bad (2x)
+Step R: 3.60012e-05 sec.
+Step S: 6.91414e-06 sec.
+
+---- Try 1 with improved step I
+
+1 thread
+Step I: 0.0297229 sec.
+Line 3: 0.016149 sec.
+Line 4: 0.0300291 sec.
+Line 5: 0.144107 sec.
+Line 6: 0.0866551 sec.
+Line 7: 0.0501649 sec.
+Line 8: 0.050808 sec.
+Step R: 3.79086e-05 sec.
+Step S: 5.00679e-06 sec.
+
+8 threads
+Step I: 0.02143 sec.
+Line 3: 0.00552797 sec.
+Line 4: 0.015341 sec.
+Line 5: 0.0349939 sec.
+Line 6: 0.032661 sec.
+Line 7: 0.0194921 sec.
+Line 8: 0.030911 sec.
+Step R: 3.50475e-05 sec.
+Step S: 7.86781e-06 sec.
+
+----- Didn't help.  I realized we could remove Step I because it's just
+duplicating data.  Now we alternate between the "last two" arrays.
+
+
+8 threads
+Step I: 9.53674e-07 sec.
+Line 3: 0.00351906 sec.
+Line 4: 0.0105071 sec.
+Line 5: 0.033046 sec.
+Line 6: 0.0303059 sec.
+Line 7: 0.017159 sec.
+Line 8: 0.022845 sec.
+Step R: 3.69549e-05 sec.
+Step S: 8.10623e-06 sec.
+
+-----
+
+2012-04-30
+Update to [master 5a906b1]
+Compiled using -mAVX and rounding
+
+1 thread
+Step I: 0 sec.
+Line 3: 0.00931787 sec.
+Line 4: 0.030726 sec.
+Line 5: 0.149234 sec.
+Line 6: 0.091686 sec.
+Line 7: 0.0439329 sec.
+Line 8: 0.0487261 sec.
+Step R: 1.72089 sec.
+Step S: 3.31402e-05 sec.
+
+8 threads
+
+Step I: 0 sec.
+Line 3: 0.0030899 sec. (3x)
+Line 4: 0.0154481 sec. (2x)
+Line 5: 0.0362 sec. (2.5x)
+Line 6: 0.034054 sec. (3x)
+Line 7: 0.0196159 sec. (2.5x)
+Line 8: 0.0292091 sec. (1.5x)
+Step R: 0.351076 sec. (5x)
+Step S: 3.91006e-05 sec.
+
+OMP_NUM_THREADS=8 KMP_AFFINITY=granularity=fine,compact,1,0 numactl --interleave=all ./netAlign ../data-mtx/lcsh-big 1 2 0.999 5 0 2
+
+Step I: 0 sec.
+Line 3: 0.00167203 sec. (8x)
+Line 4: 0.00816202 sec. (4x)
+Line 5: 0.025821 sec. (6x)
+Line 6: 0.0200958 sec. (5x)
+Line 7: 0.010493 sec. (4x)
+Line 8: 0.0146451 sec. (4x)
+Step R: 0.39111 sec.
+Step S: 3.79086e-05 sec.
+
+OMP_NUM_THREADS=8 KMP_AFFINITY=granularity=fine,compact,1,0 numactl --membind=all ./netAlign ../data-mtx/lcsh-big 1 2 0.999 5 0 2
+
+Step I: 1.19209e-06 sec.
+Line 3: 0.00310588 sec.
+Line 4: 0.015656 sec.
+Line 5: 0.0362401 sec.
+Line 6: 0.034045 sec.
+Line 7: 0.019731 sec.
+Line 8: 0.0292308 sec.
+Step R: 0.356282 sec.
+Step S: 3.69549e-05 sec.
+
+--- new othermax version 1
+Step I: 1.19209e-06 sec.
+Line 3: 0.00166082 sec.
+Line 4: 0.00813913 sec.
+Line 5: 0.028677 sec.
+Line 6: 0.0141098 sec.
+Line 7: 0.0104802 sec.
+Line 8: 0.0147228 sec.
+Step R: 0.372181 sec.
+Step S: 4.1008e-05 sec.
+
+
+--- new othermax version 2
+Step I: 9.53674e-07 sec.
+Line 3: 0.00166297 sec.
+Line 4: 0.00819016 sec.
+Line 5: 0.028491 sec.
+Line 6: 0.0136809 sec.
+Line 7: 0.010438 sec.
+Line 8: 0.014698 sec.
+Step R: 0.365949 sec.
+Step S: 4.81606e-05 sec.
+
+--- balanced othermax (1 row/2 nz)
+Step I: 0 sec.
+Line 3: 0.00165009 sec.
+Line 4: 0.00816202 sec.
+Line 5: 0.0333259 sec.
+Line 6: 0.011832 sec.
+Line 7: 0.010474 sec.
+Line 8: 0.0147002 sec.
+Step R: 0.36723 sec.
+Step S: 4.50611e-05 sec.
+
+--- balanced othermax (1 row/1 nz)
+Step I: 0 sec.
+Line 3: 0.00164008 sec.
+Line 4: 0.00819492 sec.
+Line 5: 0.0333869 sec.
+Line 6: 0.011867 sec.
+Line 7: 0.010463 sec.
+Line 8: 0.014683 sec.
+Step R: 0.36583 sec.
+Step S: 4.29153e-05 sec.
+
+OMP_SET_NESTED=1 OMP_NUM_THREADS=8 KMP_AFFINITY=granularity=fine,compact,1,0 numactl --interleave=all ./netAlign ../data-mtx/lcsh-big 1 2 0.999 5 0 2
+
+
+----
+
+May 02, 11:43am.
+
+golub 163 $ KMP_AFFINITY=granularity=fine,scatter,0,1 OMP_NESTED=1 OMP_NUM_THREADS=8 numactl --interleave=all ./netAlign ../data-mtx/lcsh-big -n 50 -r 8 -f -v -q -m mp
+Finished reading data. 4.95015 sec.
+Time to create L: 1.36891
+Time to create S: 13.272
+Timing Report: 
+     Setup : 5.91278e-07s/iter
+    Line 3 : 0.00233875s/iter
+    Line 4 : 0.0108365s/iter
+  Line 5/6 : 0.0444035s/iter
+    Line 7 : 0.0108074s/iter
+   Damping : 0.0126836s/iter
+  Rounding : 0.223986s/iter
+Set Up Time: 21.0902
+Solve Time: 15.7389
+golub 164 $ KMP_AFFINITY=granularity=fine,scatter,0,1 OMP_NESTED=1 OMP_NUM_THREADS=40 numactl --interleave=all ./netAlign ../data-mtx/lcsh-big -n 50 -r 8 -f -v -q -m mp
+Finished reading data. 4.94983 sec.
+Time to create L: 1.36807
+Time to create S: 4.76411
+Timing Report: 
+     Setup : 4.48227e-07s/iter
+    Line 3 : 0.00120848s/iter (13x)
+    Line 4 : 0.00563736s/iter (12x)
+  Line 5/6 : 0.0119285s/iter (27.4x)
+    Line 7 : 0.00657175s/iter (13x)
+   Damping : 0.00752738s/iter (13x)
+  Rounding : 0.0989572s/iter (21x)
+Set Up Time: 12.5775
+Solve Time: 7.07869 (19x)
+golub 165 $ OMP_NESTED=1 OMP_NUM_THREADS=1 numactl --membind=all ./netAlign ../data-mtx/lcsh-big -n 50 -r 8 -f -v -q -m mp
+Finished reading data. 4.58426 sec.
+Time to create L: 1.10804
+Time to create S: 33.959
+Timing Report: 
+     Setup : 3.33786e-07s/iter
+    Line 3 : 0.0159916s/iter
+    Line 4 : 0.0670131s/iter
+  Line 5/6 : 0.32677s/iter
+    Line 7 : 0.0859345s/iter
+   Damping : 0.100527s/iter
+  Rounding : 2.09515s/iter
+Set Up Time: 41.1354
+Solve Time: 135.198

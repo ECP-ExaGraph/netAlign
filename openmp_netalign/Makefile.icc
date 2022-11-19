@@ -1,0 +1,37 @@
+CC = icpc
+//CC = g++
+
+TARGET = netAlign
+
+//CFLAGS = -mkl=parallel -openmp -openmp-lib=compat -static -ipo -O3 -xSSE4.2 
+CFLAGS = -openmp -openmp-lib=compat -static -ipo -fast  
+//CFLAGS = -fopenmp -O3
+
+LDFLAGS =  $(CFLAGS)
+INCLUDES_MATCH=$(MATCHBOX_DIR)/include
+LIBSMATCH= $(MATCHBOX_DIR)/lib/optimized/libmatchbox.a
+OBJECTS = \
+  matchingHalfApproxDominatingNew.o \
+  parseInputFiles.o  \
+  sparseImpl.o \
+  netAlignExactMatch.o \
+  netAlignImplMP.o \
+  netAlignImplMR.o \
+  netAlignImpl.o $(TARGET).o
+
+all: $(TARGET) message
+
+# fix for a quick hack to avoid lots of 
+# code duplication
+netAlignImplMP.o : netAlignImplMPTasked.cpp
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) 
+.cpp.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(TARGET) $(OBJECTS)
+
+message:
+	echo "Executable: $(TARGET) has been created"

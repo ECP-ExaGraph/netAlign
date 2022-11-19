@@ -1,0 +1,15 @@
+Scores: Topological: F-NC, Biological: NCV-GS3
+
+Best Methods:
+
+LNA:
+for T/T&S: AlignNemo, For S: AlignMCL
+
+GNA:
+
+T: Netal, Ghost
+T&S: Wave, Ghost
+S: Magna++, Wave
+
+Runtimes: Worm vs Yest Y2H1: Ghost and Magna++ are multicore. Wave is fastest with 17.5 mins total and 2.9 mins solve time.
+
